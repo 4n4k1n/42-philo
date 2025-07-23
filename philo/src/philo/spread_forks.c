@@ -6,7 +6,7 @@
 /*   By: anakin <anakin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 16:04:08 by anakin            #+#    #+#             */
-/*   Updated: 2025/07/19 09:52:27 by anakin           ###   ########.fr       */
+/*   Updated: 2025/07/23 21:27:22 by anakin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,30 @@
 
 int	spread_forks(t_data *data)
 {
-	int	i;
+	int		i;
 	t_philo	*head;
+	t_philo	*current;
 
 	head = data->philos;
+	current = head;
+	i = 0;
 	while (i < data->philo_amount)
 	{
-		head->right_fork = &head->next->left_fork;
+		current->id = i + 1;
+		current->data = data;
+		if (pthread_mutex_init(&current->left_fork, NULL) != 0)
+			return (1);
+		if (pthread_mutex_init(&current->meal_mutex, NULL) != 0)
+			return (1);
+		if (i == data->philo_amount - 1)
+		{
+			current->next = head;
+			current->right_fork = &head->left_fork;
+		}
+		else
+			current->right_fork = &current->next->left_fork;
+		current = current->next;
 		i++;
 	}
-	return (1);
+	return (0);
 }
