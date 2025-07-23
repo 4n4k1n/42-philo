@@ -21,8 +21,10 @@ int	create_threads(t_data *data)
 	i = 0;
 	while (i < data->philo_amount)
 	{
-		pthread_create(philo->thread, NULL, NULL, philo);
+		if (pthread_create(&philo->thread, NULL, philo_routine, philo) != 0)
+			return (1);
 		i++;
 		philo = philo->next;
 	}
+	return (0);
 }
