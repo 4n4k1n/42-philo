@@ -14,16 +14,23 @@
 
 int	ft_atoi(char *nptr)
 {
-	unsigned int	num;
-	int				sign;
+	int	num;
+	int	sign;
 
 	while ((*nptr >= 9 && *nptr <= 13) || *nptr == ' ')
 		nptr++;
-	sign = 0;
+	sign = 1;
 	if (*nptr == '+' || *nptr == '-')
-		sign = 1 - 2 * (*(nptr++) == '-');
+	{
+		if (*nptr == '-')
+			sign = -1;
+		nptr++;
+	}
 	num = 0;
 	while (*nptr >= '0' && *nptr <= '9')
-		num = (num * 10) + ((*nptr++ - '0') * sign);
-	return (1);
+	{
+		num = (num * 10) + (*nptr - '0');
+		nptr++;
+	}
+	return (num * sign);
 }
