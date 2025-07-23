@@ -16,12 +16,19 @@ void	free_philos(t_philo *head, size_t size)
 {
 	size_t	i;
 	t_philo	*temp;
+	t_philo	*current;
 
+	if (!head)
+		return;
+	current = head;
 	i = 0;
 	while (i < size)
 	{
-		temp = head->next;
-		free(head);
+		temp = current->next;
+		pthread_mutex_destroy(&current->left_fork);
+		pthread_mutex_destroy(&current->meal_mutex);
+		free(current);
+		current = temp;
 		i++;
 	}
 }
