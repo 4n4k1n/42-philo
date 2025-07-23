@@ -72,14 +72,17 @@ typedef struct	s_philo
 // utils
 int valid_input(int ac, char **av);
 int	ft_atoi(char *nptr);
-t_philo	*create_philos(int size);
+t_philo	*create_philos(size_t size);
 void	free_philos(t_philo *head, size_t size);
 int	parsing(int ac, char **av, t_data *data);
 int	spread_forks(t_data *data);
+int	create_threads(t_data *data);
+int	join_threads(t_data *data);
 
 // timing and logging
 long long	get_time(void);
 void		print_status(t_philo *philo, char *status);
+int			check_death(t_philo *philo);
 
 // monitoring
 void		*monitor_routine(void *arg);
