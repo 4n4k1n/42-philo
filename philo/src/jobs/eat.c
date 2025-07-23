@@ -22,6 +22,6 @@ void	philo_eat(t_philo *philo)
 	philo->last_meal_time = get_time();
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->meal_mutex);
-	usleep(philo->data->tt_eat);
+	usleep(philo->data->tt_eat * 1000);
 	return_forks(philo);
 }

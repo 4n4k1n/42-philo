@@ -18,5 +18,5 @@ void	philo_sleep(t_philo *philo)
 		return ;
 	philo->state = SLEEP;
 	print_status(philo, "is sleeping");
-	usleep(philo->data->tt_sleep);
+	usleep(philo->data->tt_sleep * 1000);
 }
