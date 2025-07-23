@@ -6,7 +6,7 @@
 /*   By: anakin <anakin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:58:21 by anakin            #+#    #+#             */
-/*   Updated: 2025/07/19 09:50:06 by anakin           ###   ########.fr       */
+/*   Updated: 2025/07/23 14:26:55 by anakin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <sys/time.h>
 # include <unistd.h>
 # include <stdio.h>
+
+# define PHILOS_PER_THRED 20
 
 typedef enum e_state
 {
@@ -44,6 +46,13 @@ typedef struct s_data
 	pthread_mutex_t	death_mutex;
 	t_philo			*philos;
 }		t_data;
+
+typedef struct s_monitor
+{
+	t_philo	*head;
+	t_data	*data;
+
+}				t_monitor;
 
 typedef struct	s_philo
 {
@@ -71,7 +80,9 @@ int	spread_forks(t_data *data);
 // timing and logging
 long long	get_time(void);
 void		print_status(t_philo *philo, char *status);
-int			check_death(t_philo *philo);
+
+// monitoring
+void		*monitor_routine(void *arg);
 
 // philosopher jobs
 void		*philo_routine(void *arg);
