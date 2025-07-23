@@ -14,7 +14,7 @@
 
 static int single_philo_take_fork(t_philo *philo)
 {
-	d_mutex_lock(&philo->left_fork);
+	pthread_mutex_lock(&philo->left_fork);
 	print_status(philo, "has taken a fork");
 	pthread_mutex_unlock(&philo->left_fork);
 	return (0);

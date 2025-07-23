@@ -24,12 +24,7 @@ void	*philo_routine(void *arg)
 		usleep(1000);
 	while (!philo->data->simulation_end)
 	{
-		if (check_death(philo))
-			break ;
 		philo_eat(philo);
-		if (philo->data->meals_to_eat > 0 && 
-			philo->meals_eaten >= philo->data->meals_to_eat)
-			break ;
 		if (philo->data->simulation_end)
 			break ;
 		philo_sleep(philo);
