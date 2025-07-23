@@ -14,14 +14,17 @@
 
 int	join_threads(t_data *data)
 {
-	int	i;
+	int		i;
+	t_philo	*philo;
 
+	philo = data->philos;
 	i = 0;
 	while (i < data->philo_amount)
 	{
-		if (pthread_join(data->philos[i].thread, NULL) != 0)
+		if (pthread_join(philo->thread, NULL) != 0)
 			return (1);
 		i++;
+		philo = philo->next;
 	}
 	return (0);
 }
