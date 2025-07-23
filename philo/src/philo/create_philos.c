@@ -16,24 +16,22 @@ t_philo	*create_philos(size_t size)
 {
 	t_philo	*head;
 	t_philo	*temp;
-	int		i;
+	size_t	i;
 
-	i = 0;
+	if (size == 0)
+		return (NULL);
+	head = malloc(sizeof(t_philo));
+	if (!head)
+		return (NULL);
+	memset(head, 0, sizeof(t_philo));
+	temp = head;
+	i = 1;
 	while (i < size)
 	{
-		if (!i)
-		{
-			head = malloc(sizeof(t_philo));
-			if (!head)
-				return (NULL);
-			temp = head;
-		}
-		else
-			temp->next = malloc(sizeof(t_philo));
+		temp->next = malloc(sizeof(t_philo));
 		if (!temp->next)
 			return (free_philos(head, i), NULL);
-		if (i)
-			temp = temp->next;
+		temp = temp->next;
 		memset(temp, 0, sizeof(t_philo));
 		i++;
 	}
