@@ -18,9 +18,13 @@ static int check_arg(char *arg)
 	int i;
 
 	i = 0;
+	if (arg[i] == '+' || arg[i] == '-')
+		i++;
+	if (!arg[i])
+		return (1);
 	while (arg[i])
 	{
-		if (arg[i] != ' ' || arg[i] != '-' || arg[i] != '+' || !(arg[i] > '0' && arg[i] < '9'))
+		if (!(arg[i] >= '0' && arg[i] <= '9'))
 			return (1);
 		i++;
 	}
