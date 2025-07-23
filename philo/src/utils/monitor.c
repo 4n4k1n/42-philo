@@ -6,7 +6,7 @@
 /*   By: anakin <anakin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 14:00:00 by anakin            #+#    #+#             */
-/*   Updated: 2025/07/23 14:00:53 by anakin           ###   ########.fr       */
+/*   Updated: 2025/07/23 21:13:01 by anakin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,23 +69,23 @@ static int	check_all_ate_enough(t_data *data)
 
 void	*monitor_routine(void *arg)
 {
-	t_data	*data;
+	t_monitor	*monitor;
 	t_philo	*current;
 	int		i;
 
-	data = (t_data *)arg;
-	while (!data->simulation_end)
+	monitor = (t_monitor *)arg;
+	while (!monitor->data->simulation_end)
 	{
-		current = data->philos;
+		current = monitor->head;
 		i = 0;
-		while (i < data->philo_amount && !data->simulation_end)
+		while (i < monitor->data->philo_amount && !monitor->data->simulation_end)
 		{
 			if (check_philosopher_death(current))
 				return (NULL);
 			current = current->next;
 			i++;
 		}
-		if (check_all_ate_enough(data))
+		if (check_all_ate_enough(monitor->data))
 			return (NULL);
 		usleep(1000);
 	}
