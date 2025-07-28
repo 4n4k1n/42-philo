@@ -6,7 +6,7 @@
 /*   By: anakin <anakin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 14:00:00 by anakin            #+#    #+#             */
-/*   Updated: 2025/07/23 21:13:01 by anakin           ###   ########.fr       */
+/*   Updated: 2025/07/28 10:38:13 by anakin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static int	check_philosopher_death(t_philo *philo)
 		pthread_mutex_lock(&philo->data->death_mutex);
 		if (!philo->data->simulation_end)
 		{
-			philo->data->simulation_end = 1;
 			print_status(philo, "died");
+			philo->data->simulation_end = 1;
 		}
 		pthread_mutex_unlock(&philo->data->death_mutex);
 		return (1);
@@ -87,7 +87,7 @@ void	*monitor_routine(void *arg)
 		}
 		if (check_all_ate_enough(monitor->data))
 			return (NULL);
-		usleep(1000);
+		ft_usleep(1000);
 	}
 	return (NULL);
 }
