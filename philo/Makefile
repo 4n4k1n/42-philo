@@ -6,7 +6,7 @@
 #    By: anakin <anakin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/23 21:34:42 by anakin            #+#    #+#              #
-#    Updated: 2025/07/28 10:41:44 by anakin           ###   ########.fr        #
+#    Updated: 2025/07/28 13:30:12 by anakin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,10 @@ SRCS = $(SRCDIR)/main.c \
        $(SRCDIR)/utils/free_philos.c \
        $(SRCDIR)/utils/monitor.c \
        $(SRCDIR)/utils/timing.c \
-       $(SRCDIR)/utils/uusleep.c
+       $(SRCDIR)/utils/uusleep.c \
+       $(SRCDIR)/utils/setup_mutex.c \
+       $(SRCDIR)/utils/setup.c \
+       $(SRCDIR)/utils/destruct.c
 
 # Object files
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
