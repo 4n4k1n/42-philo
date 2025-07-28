@@ -6,7 +6,7 @@
 /*   By: anakin <anakin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:58:21 by anakin            #+#    #+#             */
-/*   Updated: 2025/07/23 14:26:55 by anakin           ###   ########.fr       */
+/*   Updated: 2025/07/28 10:31:47 by anakin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,7 @@ void		return_forks(t_philo *philo);
 void		philo_eat(t_philo *philo);
 void		philo_sleep(t_philo *philo);
 void		philo_think(t_philo *philo);
+
+void		ft_usleep(long ms);
 
 #endif
