@@ -49,8 +49,8 @@ int	check_death(t_philo *philo)
 		pthread_mutex_lock(&philo->data->death_mutex);
 		if (!philo->data->simulation_end)
 		{
-			philo->data->simulation_end = 1;
 			print_status(philo, "died");
+			philo->data->simulation_end = 1;
 		}
 		pthread_mutex_unlock(&philo->data->death_mutex);
 		return (1);
