@@ -68,9 +68,15 @@ int	take_forks(t_philo *philo)
 		return (0);
 	if (philo->data->philo_amount == 1)
 		return (single_philo_take_fork(philo));
-	if (philo->id % 2 == 0 && !even_philo_take_fork(philo))
-		return (0);
-	else if (!odd_philo_take_fork(philo))
-		return (0);
+	if (philo->id % 2 == 0)
+	{
+		if (!even_philo_take_fork(philo))
+			return (0);
+	}
+	else
+	{
+		if (!odd_philo_take_fork(philo))
+			return (0);
+	}
 	return (1);
 }
