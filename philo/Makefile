@@ -6,14 +6,14 @@
 #    By: anakin <anakin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/23 21:34:42 by anakin            #+#    #+#              #
-#    Updated: 2025/07/23 21:34:43 by anakin           ###   ########.fr        #
+#    Updated: 2025/07/28 10:41:44 by anakin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -pthread
+CFLAGS = -Wall -Wextra -Werror -pthread -g
 RM = rm -f
 
 # Directories
@@ -38,7 +38,8 @@ SRCS = $(SRCDIR)/main.c \
        $(SRCDIR)/utils/ft_atoi.c \
        $(SRCDIR)/utils/free_philos.c \
        $(SRCDIR)/utils/monitor.c \
-       $(SRCDIR)/utils/timing.c
+       $(SRCDIR)/utils/timing.c \
+       $(SRCDIR)/utils/uusleep.c
 
 # Object files
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
