@@ -30,12 +30,15 @@ int	spread_forks(t_data *data)
 		if (pthread_mutex_init(&current->meal_mutex, NULL) != 0)
 			return (1);
 		if (i == data->philo_amount - 1)
-		{
 			current->next = head;
-			current->right_fork = &head->left_fork;
-		}
-		else
-			current->right_fork = &current->next->left_fork;
+		current = current->next;
+		i++;
+	}
+	current = head;
+	i = 0;
+	while (i < data->philo_amount)
+	{
+		current->right_fork = &current->next->left_fork;
 		current = current->next;
 		i++;
 	}
