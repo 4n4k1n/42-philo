@@ -6,7 +6,7 @@
 /*   By: anakin <anakin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 09:00:00 by anakin            #+#    #+#             */
-/*   Updated: 2025/07/23 13:44:10 by anakin           ###   ########.fr       */
+/*   Updated: 2025/07/28 10:37:38 by anakin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ void	philo_eat(t_philo *philo)
 	philo->last_meal_time = get_time();
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->meal_mutex);
-	usleep(philo->data->tt_eat * 1000);
+	ft_usleep(philo->data->tt_eat * 1000);
 	return_forks(philo);
 }
