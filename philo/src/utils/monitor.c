@@ -78,7 +78,7 @@ void	*monitor_routine(void *arg)
 	{
 		current = monitor->head;
 		i = 0;
-		while (i < monitor->data->philo_amount && !monitor->data->simulation_end)
+		while (i < monitor->philos_count && !monitor->data->simulation_end)
 		{
 			if (check_philosopher_death(current))
 				return (NULL);
@@ -90,4 +90,70 @@ void	*monitor_routine(void *arg)
 		ft_usleep(1000);
 	}
 	return (NULL);
+}
+
+int	create_monitors(t_data *data)
+{
+	t_philo		*current;
+	int			i;
+	int			j;
+	int			philos_per_monitor;
+
+	data->monitor_count = (data->philo_amount + PHILOS_PER_THRED - 1) / PHILOS_PER_THRED;
+	data->monitor_threads = malloc(sizeof(pthread_t) * data->monitor_count);
+	data->monitors = malloc(sizeof(t_monitor) * data->monitor_count);
+	if (!data->monitor_threads || !data->monitors)
+	{
+		if (data->monitor_threads)
+			free(data->monitor_threads);
+		if (data->monitors)
+			free(data->monitors);
+		return (1);
+	}
+	current = data->philos;
+	i = 0;
+	while (i < data->monitor_count)
+	{
+		data->monitors[i].data = data;
+		data->monitors[i].head = current;
+		philos_per_monitor = PHILOS_PER_THRED;
+		if (i == data->monitor_count - 1)
+			philos_per_monitor = data->philo_amount - (i * PHILOS_PER_THRED);
+		data->monitors[i].philos_count = philos_per_monitor;
+		if (pthread_create(&data->monitor_threads[i], NULL, monitor_routine, &data->monitors[i]) != 0)
+		{
+			while (i > 0)
+			{
+				i--;
+				pthread_join(data->monitor_threads[i], NULL);
+			}
+			free(data->monitors);
+			free(data->monitor_threads);
+			data->monitor_threads = NULL;
+			data->monitors = NULL;
+			return (1);
+		}
+		j = 0;
+		while (j < philos_per_monitor && current)
+		{
+			current = current->next;
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+int	join_monitors(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->monitor_count)
+	{
+		if (pthread_join(data->monitor_threads[i], NULL) != 0)
+			return (1);
+		i++;
+	}
+	return (0);
 }

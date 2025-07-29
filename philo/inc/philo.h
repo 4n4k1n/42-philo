@@ -32,6 +32,14 @@ typedef enum e_state
 }			t_state;
 
 typedef struct s_philo	t_philo;
+typedef struct s_monitor	t_monitor;
+
+typedef struct s_monitor
+{
+	t_philo	*head;
+	struct s_data	*data;
+	int		philos_count;
+}				t_monitor;
 
 typedef struct s_data
 {
@@ -45,14 +53,10 @@ typedef struct s_data
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	death_mutex;
 	t_philo			*philos;
+	int				monitor_count;
+	pthread_t		*monitor_threads;
+	t_monitor		*monitors;
 }		t_data;
-
-typedef struct s_monitor
-{
-	t_philo	*head;
-	t_data	*data;
-
-}				t_monitor;
 
 typedef struct	s_philo
 {
@@ -86,6 +90,8 @@ int			check_death(t_philo *philo);
 
 // monitoring
 void		*monitor_routine(void *arg);
+int			create_monitors(t_data *data);
+int			join_monitors(t_data *data);
 
 // philosopher jobs
 void		*philo_routine(void *arg);

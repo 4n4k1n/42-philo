@@ -22,14 +22,36 @@ void	*philo_routine(void *arg)
 	pthread_mutex_unlock(&philo->meal_mutex);
 	if (philo->id % 2 == 0)
 		ft_usleep(1000);
-	while (!philo->data->simulation_end)
+	while (1)
 	{
+		pthread_mutex_lock(&philo->data->death_mutex);
+		if (philo->data->simulation_end)
+		{
+			pthread_mutex_unlock(&philo->data->death_mutex);
+			break;
+		}
+		pthread_mutex_unlock(&philo->data->death_mutex);
+		
 		philo_eat(philo);
+		
+		pthread_mutex_lock(&philo->data->death_mutex);
 		if (philo->data->simulation_end)
-			break ;
+		{
+			pthread_mutex_unlock(&philo->data->death_mutex);
+			break;
+		}
+		pthread_mutex_unlock(&philo->data->death_mutex);
+		
 		philo_sleep(philo);
+		
+		pthread_mutex_lock(&philo->data->death_mutex);
 		if (philo->data->simulation_end)
-			break ;
+		{
+			pthread_mutex_unlock(&philo->data->death_mutex);
+			break;
+		}
+		pthread_mutex_unlock(&philo->data->death_mutex);
+		
 		philo_think(philo);
 	}
 	return (NULL);

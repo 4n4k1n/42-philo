@@ -15,19 +15,16 @@
 int	main(int ac, char **av)
 {
 	t_data		data;
-	pthread_t	monitor_thread;
-	t_monitor	monitor;
 
 	if (parsing(ac, av, &data) == 1)
 		return (1);
 	setup(&data);
-	monitor.head = data.philos;
-	monitor.data = &data;
-	if (pthread_create(&monitor_thread, NULL, monitor_routine, &monitor) != 0)
+	if (create_monitors(&data) != 0)
 		return (1);
 	if (join_threads(&data) == 1)
 		return (1);
-	pthread_join(monitor_thread, NULL);
+	if (join_monitors(&data) != 0)
+		return (1);
 	desruct(&data);
 	return (0);
 }

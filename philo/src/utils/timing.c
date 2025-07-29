@@ -24,14 +24,22 @@ void	print_status(t_philo *philo, char *status)
 {
 	long long	timestamp;
 
+	pthread_mutex_lock(&philo->data->death_mutex);
 	if (philo->data->simulation_end)
+	{
+		pthread_mutex_unlock(&philo->data->death_mutex);
 		return ;
+	}
+	pthread_mutex_unlock(&philo->data->death_mutex);
+	
 	pthread_mutex_lock(&philo->data->print_mutex);
+	pthread_mutex_lock(&philo->data->death_mutex);
 	if (!philo->data->simulation_end)
 	{
 		timestamp = get_time() - philo->data->start_time;
 		printf("%lld %zu %s\n", timestamp, philo->id, status);
 	}
+	pthread_mutex_unlock(&philo->data->death_mutex);
 	pthread_mutex_unlock(&philo->data->print_mutex);
 }
 
