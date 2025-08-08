@@ -16,8 +16,13 @@ void	philo_think(t_philo *philo)
 {
 	long	think_time;
 
+	pthread_mutex_lock(&philo->data->death_mutex);
 	if (philo->data->simulation_end)
+	{
+		pthread_mutex_unlock(&philo->data->death_mutex);
 		return ;
+	}
+	pthread_mutex_unlock(&philo->data->death_mutex);
 	philo->state = THINK;
 	print_status(philo, "is thinking");
 	think_time = (philo->data->tt_die - (philo->data->tt_eat

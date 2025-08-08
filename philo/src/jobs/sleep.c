@@ -14,8 +14,13 @@
 
 void	philo_sleep(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->data->death_mutex);
 	if (philo->data->simulation_end)
+	{
+		pthread_mutex_unlock(&philo->data->death_mutex);
 		return ;
+	}
+	pthread_mutex_unlock(&philo->data->death_mutex);
 	philo->state = SLEEP;
 	print_status(philo, "is sleeping");
 	ft_usleep(philo->data->tt_sleep * 1000);

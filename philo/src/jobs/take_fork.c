@@ -23,20 +23,26 @@ static int single_philo_take_fork(t_philo *philo)
 static int	odd_philo_take_fork(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->left_fork);
+	pthread_mutex_lock(&philo->data->death_mutex);
 	if (philo->data->simulation_end)
 	{
+		pthread_mutex_unlock(&philo->data->death_mutex);
 		pthread_mutex_unlock(&philo->left_fork);
 		return (0);
 	}
+	pthread_mutex_unlock(&philo->data->death_mutex);
 	print_status(philo, "has taken a fork");
 	
 	pthread_mutex_lock(philo->right_fork);
+	pthread_mutex_lock(&philo->data->death_mutex);
 	if (philo->data->simulation_end)
 	{
+		pthread_mutex_unlock(&philo->data->death_mutex);
 		pthread_mutex_unlock(philo->right_fork);
 		pthread_mutex_unlock(&philo->left_fork);
 		return (0);
 	}
+	pthread_mutex_unlock(&philo->data->death_mutex);
 	print_status(philo, "has taken a fork");
 	return (1);
 }
@@ -44,28 +50,39 @@ static int	odd_philo_take_fork(t_philo *philo)
 static int	even_philo_take_fork(t_philo *philo)
 {
 	pthread_mutex_lock(philo->right_fork);
+	pthread_mutex_lock(&philo->data->death_mutex);
 	if (philo->data->simulation_end)
 	{
+		pthread_mutex_unlock(&philo->data->death_mutex);
 		pthread_mutex_unlock(philo->right_fork);
 		return (0);
 	}
+	pthread_mutex_unlock(&philo->data->death_mutex);
 	print_status(philo, "has taken a fork");
 	
 	pthread_mutex_lock(&philo->left_fork);
+	pthread_mutex_lock(&philo->data->death_mutex);
 	if (philo->data->simulation_end)
 	{
+		pthread_mutex_unlock(&philo->data->death_mutex);
 		pthread_mutex_unlock(&philo->left_fork);
 		pthread_mutex_unlock(philo->right_fork);
 		return (0);
 	}
+	pthread_mutex_unlock(&philo->data->death_mutex);
 	print_status(philo, "has taken a fork");
 	return (1);
 }
 
 int	take_forks(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->data->death_mutex);
 	if (philo->data->simulation_end)
+	{
+		pthread_mutex_unlock(&philo->data->death_mutex);
 		return (0);
+	}
+	pthread_mutex_unlock(&philo->data->death_mutex);
 	if (philo->data->philo_amount == 1)
 		return (single_philo_take_fork(philo));
 	if (philo->id % 2 == 0)

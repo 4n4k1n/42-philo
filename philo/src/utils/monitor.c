@@ -26,8 +26,11 @@ static int	check_philosopher_death(t_philo *philo)
 		pthread_mutex_lock(&philo->data->death_mutex);
 		if (!philo->data->simulation_end)
 		{
-			print_status(philo, "died");
 			philo->data->simulation_end = 1;
+			pthread_mutex_lock(&philo->data->print_mutex);
+			current_time = get_time() - philo->data->start_time;
+			printf("%lld %zu died\n", current_time, philo->id);
+			pthread_mutex_unlock(&philo->data->print_mutex);
 		}
 		pthread_mutex_unlock(&philo->data->death_mutex);
 		return (1);

@@ -30,17 +30,11 @@ void	print_status(t_philo *philo, char *status)
 		pthread_mutex_unlock(&philo->data->death_mutex);
 		return ;
 	}
-	pthread_mutex_unlock(&philo->data->death_mutex);
-	
 	pthread_mutex_lock(&philo->data->print_mutex);
-	pthread_mutex_lock(&philo->data->death_mutex);
-	if (!philo->data->simulation_end)
-	{
-		timestamp = get_time() - philo->data->start_time;
-		printf("%lld %zu %s\n", timestamp, philo->id, status);
-	}
-	pthread_mutex_unlock(&philo->data->death_mutex);
+	timestamp = get_time() - philo->data->start_time;
+	printf("%lld %zu %s\n", timestamp, philo->id, status);
 	pthread_mutex_unlock(&philo->data->print_mutex);
+	pthread_mutex_unlock(&philo->data->death_mutex);
 }
 
 int	check_death(t_philo *philo)
