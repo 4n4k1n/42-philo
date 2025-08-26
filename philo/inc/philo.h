@@ -6,7 +6,7 @@
 /*   By: anakin <anakin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 10:58:21 by anakin            #+#    #+#             */
-/*   Updated: 2025/07/28 13:11:42 by anakin           ###   ########.fr       */
+/*   Updated: 2025/08/26 13:23:13 by anakin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void		philo_eat(t_philo *philo);
 void		philo_sleep(t_philo *philo);
 void		philo_think(t_philo *philo);
 
-void		ft_usleep(long ms);
+void		ft_usleep(long ms, t_philo *philo);
 void	desruct(t_data *data);
 int 	setup_mutex(t_data *data);
 int		setup(t_data *data);

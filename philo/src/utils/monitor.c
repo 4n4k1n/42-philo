@@ -6,7 +6,7 @@
 /*   By: anakin <anakin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 14:00:00 by anakin            #+#    #+#             */
-/*   Updated: 2025/07/28 10:38:13 by anakin           ###   ########.fr       */
+/*   Updated: 2025/08/26 13:25:15 by anakin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	*monitor_routine(void *arg)
 		}
 		if (check_all_ate_enough(monitor->data))
 			return (NULL);
-		ft_usleep(1000);
 	}
 	return (NULL);
 }
