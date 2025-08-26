@@ -12,7 +12,7 @@
 
 #include "../../inc/philo.h"
 
-void	ft_usleep(long ms)
+void	ft_usleep(long ms, t_philo *philo)
 {
 	long	start;
 	long	elapsed;
@@ -23,6 +23,8 @@ void	ft_usleep(long ms)
 		elapsed = get_time() - start;
 		if (elapsed >= ms / 1000)
 			break ;
+		if (philo->end)
+			break;
 		usleep(100);
 	}
 }

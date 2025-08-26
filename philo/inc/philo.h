@@ -56,6 +56,7 @@ typedef struct s_data
 	int				monitor_count;
 	pthread_t		*monitor_threads;
 	t_monitor		*monitors;
+	int				end;
 }		t_data;
 
 typedef struct	s_philo
@@ -70,6 +71,7 @@ typedef struct	s_philo
 	long long		last_meal_time;
 	int				meals_eaten;
 	pthread_mutex_t	meal_mutex;
+	int end;
 }					t_philo;
 
 
