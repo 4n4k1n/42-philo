@@ -12,6 +12,21 @@
 
 #include "../../inc/philo.h"
 
+static void	notify_all_philosophers(t_data *data)
+{
+	t_philo	*current;
+	int		i;
+
+	current = data->philos;
+	i = 0;
+	while (i < data->philo_amount)
+	{
+		current->end = 1;
+		current = current->next;
+		i++;
+	}
+}
+
 static int	check_philosopher_death(t_philo *philo)
 {
 	long long	current_time;
@@ -27,6 +42,7 @@ static int	check_philosopher_death(t_philo *philo)
 		if (!philo->data->simulation_end)
 		{
 			philo->data->simulation_end = 1;
+			notify_all_philosophers(philo->data);
 			pthread_mutex_lock(&philo->data->print_mutex);
 			current_time = get_time() - philo->data->start_time;
 			printf("%lld %zu died\n", current_time, philo->id);
@@ -64,6 +80,7 @@ static int	check_all_ate_enough(t_data *data)
 	{
 		pthread_mutex_lock(&data->death_mutex);
 		data->simulation_end = 1;
+		notify_all_philosophers(data);
 		pthread_mutex_unlock(&data->death_mutex);
 		return (1);
 	}

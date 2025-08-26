@@ -6,7 +6,7 @@
 /*   By: anakin <anakin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 07:59:38 by anakin            #+#    #+#             */
-/*   Updated: 2025/08/26 13:23:32 by anakin           ###   ########.fr       */
+/*   Updated: 2025/08/26 14:12:32 by anakin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,36 +22,14 @@ void	*philo_routine(void *arg)
 	pthread_mutex_unlock(&philo->meal_mutex);
 	if (philo->id % 2 == 0)
 		ft_usleep(1000, philo);
-	while (1)
+	while (!philo->end)
 	{
-		pthread_mutex_lock(&philo->data->death_mutex);
-		if (philo->data->simulation_end)
-		{
-			pthread_mutex_unlock(&philo->data->death_mutex);
-			break;
-		}
-		pthread_mutex_unlock(&philo->data->death_mutex);
-		
 		philo_eat(philo);
-		
-		pthread_mutex_lock(&philo->data->death_mutex);
-		if (philo->data->simulation_end)
-		{
-			pthread_mutex_unlock(&philo->data->death_mutex);
+		if (philo->end)
 			break;
-		}
-		pthread_mutex_unlock(&philo->data->death_mutex);
-		
 		philo_sleep(philo);
-		
-		pthread_mutex_lock(&philo->data->death_mutex);
-		if (philo->data->simulation_end)
-		{
-			pthread_mutex_unlock(&philo->data->death_mutex);
+		if (philo->end)
 			break;
-		}
-		pthread_mutex_unlock(&philo->data->death_mutex);
-		
 		philo_think(philo);
 	}
 	return (NULL);
