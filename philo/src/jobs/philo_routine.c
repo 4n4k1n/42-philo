@@ -22,13 +22,13 @@ void	*philo_routine(void *arg)
 	pthread_mutex_unlock(&philo->meal_mutex);
 	if (philo->id % 2 == 0)
 		ft_usleep(1000, philo);
-	while (!philo->end)
+	while (!get_philo_end(philo))
 	{
 		philo_eat(philo);
-		if (philo->end)
+		if (get_philo_end(philo))
 			break;
 		philo_sleep(philo);
-		if (philo->end)
+		if (get_philo_end(philo))
 			break;
 		philo_think(philo);
 	}
