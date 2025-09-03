@@ -27,6 +27,7 @@ void	free_philos(t_philo *head, size_t size)
 		temp = current->next;
 		pthread_mutex_destroy(&current->left_fork);
 		pthread_mutex_destroy(&current->meal_mutex);
+		pthread_mutex_destroy(&current->end_mutex);
 		free(current);
 		current = temp;
 		i++;
