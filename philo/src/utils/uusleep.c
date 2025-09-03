@@ -23,7 +23,7 @@ void	ft_usleep(long ms, t_philo *philo)
 		elapsed = get_time() - start;
 		if (elapsed >= ms / 1000)
 			break ;
-		if (philo->end)
+		if (get_philo_end(philo))
 			break;
 		usleep(100);
 	}
