@@ -18,5 +18,7 @@ int setup_mutex(t_data *data)
 		return (1);
 	if (pthread_mutex_init(&data->death_mutex, NULL) != 0)
 		return (1);
+	if (pthread_mutex_init(&data->end_mutex, NULL) != 0)
+		return (1);
 	return (0);
 }

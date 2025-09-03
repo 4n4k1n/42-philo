@@ -21,7 +21,7 @@ static void	notify_all_philosophers(t_data *data)
 	i = 0;
 	while (i < data->philo_amount)
 	{
-		current->end = 1;
+		set_philo_end(current, 1);
 		current = current->next;
 		i++;
 	}
