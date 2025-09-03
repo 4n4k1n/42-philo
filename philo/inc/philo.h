@@ -52,6 +52,7 @@ typedef struct s_data
 	int				simulation_end;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	death_mutex;
+	pthread_mutex_t	end_mutex;
 	t_philo			*philos;
 	int				monitor_count;
 	pthread_t		*monitor_threads;
@@ -71,6 +72,7 @@ typedef struct	s_philo
 	long long		last_meal_time;
 	int				meals_eaten;
 	pthread_mutex_t	meal_mutex;
+	pthread_mutex_t	end_mutex;
 	int end;
 }					t_philo;
 
@@ -107,5 +109,9 @@ void		ft_usleep(long ms, t_philo *philo);
 void	desruct(t_data *data);
 int 	setup_mutex(t_data *data);
 int		setup(t_data *data);
+int		get_philo_end(t_philo *philo);
+void	set_philo_end(t_philo *philo, int value);
+int		get_data_end(t_data *data);
+void	set_data_end(t_data *data, int value);
 
 #endif
