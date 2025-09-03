@@ -29,6 +29,8 @@ int	spread_forks(t_data *data)
 			return (1);
 		if (pthread_mutex_init(&current->meal_mutex, NULL) != 0)
 			return (1);
+		if (pthread_mutex_init(&current->end_mutex, NULL) != 0)
+			return (1);
 		if (i == data->philo_amount - 1)
 			current->next = head;
 		current = current->next;
