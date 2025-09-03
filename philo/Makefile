@@ -42,7 +42,8 @@ SRCS = $(SRCDIR)/main.c \
        $(SRCDIR)/utils/uusleep.c \
        $(SRCDIR)/utils/setup_mutex.c \
        $(SRCDIR)/utils/setup.c \
-       $(SRCDIR)/utils/destruct.c
+       $(SRCDIR)/utils/destruct.c \
+       $(SRCDIR)/utils/end_flag.c
 
 # Object files
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
