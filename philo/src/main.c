@@ -3,28 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anakin <anakin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: apregitz <apregitz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/14 11:41:04 by anakin            #+#    #+#             */
-/*   Updated: 2025/07/28 13:15:41 by anakin           ###   ########.fr       */
+/*   Created: 2025/09/05 10:23:40 by apregitz          #+#    #+#             */
+/*   Updated: 2025/09/05 10:24:22 by apregitz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "philo.h"
 
-int	main(int ac, char **av)
+int	main(int argc, char **argv)
 {
-	t_data		data;
+	t_params	params;
 
-	if (parsing(ac, av, &data) == 1)
+	if (!parse_args(argc, argv, &params))
+	{
+		printf("Error: Invalid arguments\n");
 		return (1);
-	setup(&data);
-	if (create_monitors(&data) != 0)
-		return (1);
-	if (join_threads(&data) == 1)
-		return (1);
-	if (join_monitors(&data) != 0)
-		return (1);
-	desruct(&data);
+	}
+ddkjkjdd	// Further implementation would go here
 	return (0);
 }
