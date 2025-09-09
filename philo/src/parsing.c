@@ -6,13 +6,13 @@
 /*   By: apregitz <apregitz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 10:05:18 by apregitz          #+#    #+#             */
-/*   Updated: 2025/09/05 14:41:48 by apregitz         ###   ########.fr       */
+/*   Updated: 2025/09/09 13:35:28 by apregitz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	parse_int(const char *str, int *out)
+static int	parse_int(char *str, int *out)
 {
 	long	num;
 	int		sign;
@@ -22,13 +22,7 @@ static int	parse_int(const char *str, int *out)
 	while (*str == ' ' || (*str >= 9 && *str <= 13))
 		str++;
 	if (*str == '-' || *str == '+')
-	{
-		if (*str == '-')
-			sign = -1;
-		str++;
-	}
-	if (*str < '0' || *str > '9')
-		return (0);
+		sign = 1 - 2 * (*(str++) == '-');
 	while (*str >= '0' && *str <= '9')
 	{
 		num = num * 10 + (*str - '0');
@@ -63,5 +57,3 @@ int	parse_args(int argc, char **argv, t_params *params)
 		params->num_meals = -1;
 	return (1);
 }
-
-
