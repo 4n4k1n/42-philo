@@ -6,7 +6,7 @@
 /*   By: apregitz <apregitz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 14:34:33 by apregitz          #+#    #+#             */
-/*   Updated: 2025/09/09 15:20:19 by apregitz         ###   ########.fr       */
+/*   Updated: 2025/09/10 15:01:59 by apregitz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,33 +29,30 @@ static int	ft_usleep(long time_in_ms, t_philo *philo)
 
 static int	sleeping(t_philo *philo)
 {
-	printf("%ld %d is sleeping\n", get_time_in_ms() - philo->data->start_time, philo->id);
+	print_status(philo, "is sleeping");
 	ft_usleep(philo->data->params.time_to_sleep, philo);
 	return (0);
 }
 
 static int	thinking(t_philo *philo)
 {
-	if (philo->data->dead)
+	if (philo->dead)
 		return (1);
-	printf("%ld %d is thinking\n", get_time_in_ms() - philo->data->start_time, philo->id);
+	print_status(philo, "is thinking");
 	ft_usleep(philo->data->params.time_to_sleep, philo);
 	return (0);
 }
 
 static int	eating(t_philo *philo)
 {
-	long start_time;
-
-	if (philo->data->dead)
+	if (philo->dead)
 		return (1);
 	pthread_mutex_lock(&philo->left_fork);
-	printf("%ld %d has taken a fork\n", get_time_in_ms() - philo->data->start_time, philo->id);
+	print_status(philo, "has taken a fork");
 	pthread_mutex_lock(philo->right_fork);
-	printf("%ld %d has taken a fork\n", get_time_in_ms() - philo->data->start_time, philo->id);
+	print_status(philo, "has taken a fork");
 	philo->last_meal = get_time_in_ms();
-	printf("%ld %d is eating\n", philo->last_meal - philo->data->start_time, philo->id);
-	start_time = get_time_in_ms();
+	print_status(philo, "is eating");
 	ft_usleep(philo->data->params.time_to_eat, philo);
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->left_fork);
@@ -63,19 +60,15 @@ static int	eating(t_philo *philo)
 	return (0);
 }
 
-int routine(void *arg)
+void	*routine(void *arg)
 {
 	t_philo *philo = (t_philo *)arg;
 
 	philo->last_meal = get_time_in_ms();
-	while (!philo->data->dead && (philo->data->params.num_meals == -1 || philo->meals_eaten < philo->data->params.num_meals))
+	while (!philo->dead && (philo->data->params.num_meals == -1 || philo->meals_eaten < philo->data->params.num_meals))
 	{
-		if (eating(philo))
-			break ;
-		if (sleeping(philo))
-			break ;
-		if (thinking(philo))
-			break ;
+		if (eating(philo) || sleeping(philo) || thinking(philo))
+			break ; 
 	}
-	return (0);
+	return (NULL);
 }	
