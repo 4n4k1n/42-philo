@@ -6,7 +6,7 @@
 /*   By: apregitz <apregitz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 14:34:33 by apregitz          #+#    #+#             */
-/*   Updated: 2025/09/12 14:25:34 by apregitz         ###   ########.fr       */
+/*   Updated: 2025/09/19 15:57:56 by apregitz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	sleeping(t_philo *philo)
 	return (0);
 }
 
-static int	thinking(t_philo *philo)
+int	thinking(t_philo *philo)
 {
 	if (philo->dead)
 		return (1);
@@ -57,7 +57,7 @@ static void	take_forks(t_philo *philo)
 	}
 	else
 	{
-		usleep(100);
+		usleep(500);
 		pthread_mutex_lock(philo->right_fork);
 		print_status(philo, "has taken a fork");
 		pthread_mutex_lock(&philo->left_fork);
@@ -101,7 +101,7 @@ void	*routine(void *arg)
 		if (sleeping(philo))
 			break ;
 		if (thinking(philo))
-			break ;
+			break;
 	}
 	return (NULL);
-}	
+}
