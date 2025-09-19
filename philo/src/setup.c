@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apregitz <apregitz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anakin <anakin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 10:40:49 by apregitz          #+#    #+#             */
-/*   Updated: 2025/09/10 14:58:14 by apregitz         ###   ########.fr       */
+/*   Updated: 2025/09/19 23:42:47 by anakin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	init_philo(t_philo *philo, int id, t_data *data)
 {
     philo->id = id;
     philo->meals_eaten = 0;
-    philo->last_meal = 0;
+    philo->last_meal = get_time_in_ms();
     philo->data = data;
 }
 
