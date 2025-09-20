@@ -6,7 +6,7 @@
 /*   By: apregitz <apregitz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 14:34:33 by apregitz          #+#    #+#             */
-/*   Updated: 2025/09/20 03:46:34 by apregitz         ###   ########.fr       */
+/*   Updated: 2025/09/20 05:36:04 by apregitz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static int	sleeping(t_philo *philo)
 int	thinking(t_philo *philo)
 {
 	bool	death_check;
+	long	last_meal;
 
 	pthread_mutex_lock(&philo->death_mutex);
 	death_check = philo->dead;
@@ -52,6 +53,14 @@ int	thinking(t_philo *philo)
 	if (death_check)
 		return (1);
 	print_status(philo, "is thinking");
+	pthread_mutex_lock(&philo->meal_mutex);
+	last_meal = philo->last_meal;
+	pthread_mutex_unlock(&philo->meal_mutex);
+	if (philo->id % 2 == 0)
+		ft_usleep((philo->data->params.time_to_die - (get_time_in_ms() - last_meal)) / 4, philo);
+	else
+		
+		ft_usleep((philo->data->params.time_to_die - (get_time_in_ms() - last_meal)) / 2, philo);
 	return (0);
 }
 
