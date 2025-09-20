@@ -6,7 +6,7 @@
 /*   By: apregitz <apregitz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 14:32:59 by apregitz          #+#    #+#             */
-/*   Updated: 2025/09/10 14:52:32 by apregitz         ###   ########.fr       */
+/*   Updated: 2025/09/20 02:21:09 by apregitz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_philo
 	t_data			*data;
 	bool			dead;
 	pthread_mutex_t	death_mutex;
-	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	meal_mutex;
 }					t_philo;
 
 typedef struct s_data
@@ -52,6 +52,7 @@ typedef struct s_data
 	t_params		params;
 	t_philo			*philos;
 	long			start_time;
+	pthread_mutex_t	print_mutex;
 }					t_data;
 
 int		parse_args(int argc, char **argv, t_params *params);
