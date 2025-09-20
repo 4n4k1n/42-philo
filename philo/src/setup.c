@@ -1,6 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
+/* ************************************************************************** */ /*                                                                            */ /*                                                        :::      ::::::::   */
 /*   setup.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anakin <anakin@student.42.fr>              +#+  +:+       +#+        */
@@ -18,6 +16,7 @@ static void	init_philo(t_philo *philo, int id, t_data *data)
     philo->meals_eaten = 0;
     philo->last_meal = get_time_in_ms();
     philo->data = data;
+    philo->dead = false;
 }
 
 static int	create_philo_array(t_data *data)
@@ -41,10 +40,16 @@ static int	create_mutexes(t_data *data)
 {
     int i;
 
+    if (pthread_mutex_init(&data->print_mutex, NULL) != 0)
+        return (printf("Mutex init error: print_mutex"), 0);
     for (i = 0; i < data->params.num_philos; i++)
     {
         if (pthread_mutex_init(&data->philos[i].left_fork, NULL) != 0)
-            return (0);
+            return (printf("Mutex init error: left_fork"), 0);
+        if (pthread_mutex_init(&data->philos[i].death_mutex, NULL) != 0)
+            return (printf("Mutex init error: death_mutex"), 0);
+        if (pthread_mutex_init(&data->philos[i].meal_mutex, NULL) != 0)
+            return (printf("Mutex init error: meal_mutex"), 0);
     }
     return (1);
 }

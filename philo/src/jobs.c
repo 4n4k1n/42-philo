@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   jobs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anakin <anakin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: apregitz <apregitz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 14:34:33 by apregitz          #+#    #+#             */
-/*   Updated: 2025/09/19 23:34:31 by anakin           ###   ########.fr       */
+/*   Updated: 2025/09/20 03:46:34 by apregitz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,16 @@ static int	ft_usleep(long time_in_ms, t_philo *philo)
 {
 	long start_time;
 	long elapsed;
-	// printf("				%d	%ld\n", philo->id, time_in_ms);
+	bool	death_check;
 
 	start_time = get_time_in_ms();
 	while (1)
 	{
 		elapsed = get_time_in_ms() - start_time;
-		if (philo->dead)
+		pthread_mutex_lock(&philo->death_mutex);
+		death_check = philo->dead;
+		pthread_mutex_unlock(&philo->death_mutex);
+		if (death_check)
 			return (1);
 		if (elapsed >= time_in_ms)
 			break ;
@@ -86,16 +89,22 @@ static void	take_forks(t_philo *philo)
 static int	eating(t_philo *philo)
 {
 	int	exit_code;
+	bool	death_check;
 
 	exit_code = 0;
-	if (philo->dead)
+	pthread_mutex_lock(&philo->death_mutex);
+	death_check = philo->dead;
+	pthread_mutex_unlock(&philo->death_mutex);
+	if (death_check)
 		return (1);
 	take_forks(philo);
+	pthread_mutex_lock(&philo->meal_mutex);
 	philo->last_meal = get_time_in_ms();
+	philo->meals_eaten++;
+	pthread_mutex_unlock(&philo->meal_mutex);
 	print_status(philo, "is eating");
 	if (ft_usleep(philo->data->params.time_to_eat, philo))
 		exit_code = 1;
-	philo->meals_eaten++;
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_unlock(philo->right_fork);
@@ -111,7 +120,7 @@ void	*routine(void *arg)
 {
 	t_philo *philo = (t_philo *)arg;
 
-	philo->last_meal = get_time_in_ms();
+	// philo->last_meal = get_time_in_ms();
 	while (1)
 	{
 		if (eating(philo))

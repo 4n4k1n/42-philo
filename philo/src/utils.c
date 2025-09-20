@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anakin <anakin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: apregitz <apregitz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:37:03 by apregitz          #+#    #+#             */
-/*   Updated: 2025/09/19 21:52:55 by anakin           ###   ########.fr       */
+/*   Updated: 2025/09/20 03:49:31 by apregitz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ int get_time_in_ms(void)
 void	print_status(t_philo *philo, char *status)
 {
 	long long	timestamp;
+	int			id;
 
+	id = philo->id;
 	timestamp = get_time_in_ms() - philo->data->start_time;
-	pthread_mutex_lock(&philo->print_mutex);
-	printf("%lld %d %s\n", timestamp, philo->id, status);
-	pthread_mutex_unlock(&philo->print_mutex);
+	pthread_mutex_lock(&philo->data->print_mutex);
+	printf("%lld %d %s\n", timestamp, id, status);
+	pthread_mutex_unlock(&philo->data->print_mutex);
 }
