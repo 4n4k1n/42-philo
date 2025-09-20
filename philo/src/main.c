@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apregitz <apregitz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anakin <anakin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 10:23:40 by apregitz          #+#    #+#             */
-/*   Updated: 2025/09/20 04:02:21 by apregitz         ###   ########.fr       */
+/*   Updated: 2025/09/20 04:26:29 by anakin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-// int join_threads(t_data *data)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < data->params.num_philos)
-// 	{
-// 		if (pthread_create(&data->philos[i].thread, NULL, routine, &data->philos[i]) != 0)
-// 			return (0);
-// 		i++;
-// 	}
-// 	return (1);
-// }
 
 void	set_all_philos_dead(t_data *data)
 {
@@ -93,15 +79,21 @@ void	cleanup_data(t_data *data)
 {
 	int	i;
 
-	pthread_mutex_destroy(&data->print_mutex);
 	i = 0;
 	while (i < data->params.num_philos)
 	{
 		pthread_join(data->philos[i].thread, NULL);
-		pthread_mutex_destroy(&data->philos[i].left_fork);
-		pthread_mutex_destroy(&data->philos[i].death_mutex);
 		i++;
 	}
+	i = 0;
+	while (i < data->params.num_philos)
+	{
+		pthread_mutex_destroy(&data->philos[i].left_fork);
+		pthread_mutex_destroy(&data->philos[i].death_mutex);
+		pthread_mutex_destroy(&data->philos[i].meal_mutex);
+		i++;
+	}
+	pthread_mutex_destroy(&data->print_mutex);
 	free(data->philos);
 }
 
