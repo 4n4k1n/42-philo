@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anakin <anakin@student.42.fr>              +#+  +:+       +#+         #
+#    By: apregitz <apregitz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/23 21:34:42 by anakin            #+#    #+#              #
-#    Updated: 2025/07/28 13:30:12 by anakin           ###   ########.fr        #
+#    Updated: 2025/09/21 12:11:57 by apregitz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,27 +23,11 @@ OBJDIR = obj
 
 # Source files
 SRCS = $(SRCDIR)/main.c \
-       $(SRCDIR)/parsing/parsing.c \
-       $(SRCDIR)/parsing/valid_input.c \
-       $(SRCDIR)/philo/create_philos.c \
-       $(SRCDIR)/philo/create_threads.c \
-       $(SRCDIR)/philo/join_threads.c \
-       $(SRCDIR)/philo/spread_forks.c \
-       $(SRCDIR)/jobs/philo_routine.c \
-       $(SRCDIR)/jobs/take_fork.c \
-       $(SRCDIR)/jobs/return_fork.c \
-       $(SRCDIR)/jobs/eat.c \
-       $(SRCDIR)/jobs/sleep.c \
-       $(SRCDIR)/jobs/think.c \
-       $(SRCDIR)/utils/ft_atoi.c \
-       $(SRCDIR)/utils/free_philos.c \
-       $(SRCDIR)/utils/monitor.c \
-       $(SRCDIR)/utils/timing.c \
-       $(SRCDIR)/utils/uusleep.c \
-       $(SRCDIR)/utils/setup_mutex.c \
-       $(SRCDIR)/utils/setup.c \
-       $(SRCDIR)/utils/destruct.c \
-       $(SRCDIR)/utils/end_flag.c
+          $(SRCDIR)/utils.c \
+          $(SRCDIR)/setup.c \
+		  $(SRCDIR)/jobs.c \
+		  $(SRCDIR)/parsing.c \
+		  $(SRCDIR)/monitor.c
 
 # Object files
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)

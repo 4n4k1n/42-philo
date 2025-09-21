@@ -3,28 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anakin <anakin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: apregitz <apregitz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/14 11:41:04 by anakin            #+#    #+#             */
-/*   Updated: 2025/07/28 13:15:41 by anakin           ###   ########.fr       */
+/*   Created: 2025/09/20 14:18:52 by anakin            #+#    #+#             */
+/*   Updated: 2025/09/21 15:54:06 by apregitz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "philo.h"
 
-int	main(int ac, char **av)
+void	*routine(void *arg)
 {
-	t_data		data;
+	t_philo	*philo;
 
-	if (parsing(ac, av, &data) == 1)
+	philo = (t_philo *)arg;
+	while (1)
+	{
+		if (eating(philo))
+			break ;
+		if (sleeping(philo))
+			break ;
+		if (thinking(philo))
+			break ;
+	}
+	return (NULL);
+}
+
+void	cleanup_data(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->params.num_philos)
+	{
+		pthread_join(data->philos[i].thread, NULL);
+		i++;
+	}
+	i = 0;
+	while (i < data->params.num_philos)
+	{
+		pthread_mutex_destroy(&data->philos[i].left_fork);
+		pthread_mutex_destroy(&data->philos[i].death_mutex);
+		pthread_mutex_destroy(&data->philos[i].meal_mutex);
+		i++;
+	}
+	pthread_mutex_destroy(&data->print_mutex);
+	free(data->philos);
+}
+
+int	main(int argc, char **argv)
+{
+	t_data	data;
+
+	if (parse_args(argc, argv, &data.params) == 1)
 		return (1);
-	setup(&data);
-	if (create_monitors(&data) != 0)
-		return (1);
-	if (join_threads(&data) == 1)
-		return (1);
-	if (join_monitors(&data) != 0)
-		return (1);
-	desruct(&data);
+	if (setup(&data) == 1)
+		return (printf("setup error\n"), 1);
+	monitor_philos(&data);
+	cleanup_data(&data);
 	return (0);
 }
