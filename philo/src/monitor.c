@@ -6,7 +6,7 @@
 /*   By: apregitz <apregitz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 12:10:21 by apregitz          #+#    #+#             */
-/*   Updated: 2025/09/21 14:48:17 by apregitz         ###   ########.fr       */
+/*   Updated: 2025/09/21 15:29:16 by apregitz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	set_all_philos_dead(t_data *data)
 	}
 }
 
-int check_for_enough_meals(t_data *data, int i)
+int	check_for_enough_meals(t_data *data, int i)
 {
 	int			meals_eaten;
 	static int	check = -1;
 
-	if (data->params.num_meals == -1)	
+	if (data->params.num_meals == -1)
 		return (0);
 	pthread_mutex_lock(&data->philos[i].meal_mutex);
 	meals_eaten = data->philos[i].meals_eaten;
@@ -46,10 +46,9 @@ int check_for_enough_meals(t_data *data, int i)
 	return (0);
 }
 
-void monitor_philos(t_data *data)
+void	monitor_philos(t_data *data)
 {
 	int		i;
-	long	current_time;
 	long	last_meal;
 
 	while (true)
@@ -57,12 +56,11 @@ void monitor_philos(t_data *data)
 		i = 0;
 		while (i < data->params.num_philos)
 		{
-			current_time = get_time_in_ms();
 			pthread_mutex_lock(&data->philos[i].meal_mutex);
 			last_meal = data->philos[i].last_meal;
 			pthread_mutex_unlock(&data->philos[i].meal_mutex);
-			if ((current_time - last_meal) > data->params.time_to_die)
-			{ 
+			if ((get_time_in_ms() - last_meal) > data->params.time_to_die)
+			{
 				pthread_mutex_lock(&data->print_mutex);
 				set_all_philos_dead(data);
 				print_status(&data->philos[i], "died");
@@ -71,6 +69,8 @@ void monitor_philos(t_data *data)
 			}
 			if (check_for_enough_meals(data, i))
 				return ((void)set_all_philos_dead(data));
-			i++; } usleep(500);
+			i++;
+		}
+		usleep(500);
 	}
 }

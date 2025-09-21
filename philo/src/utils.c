@@ -6,13 +6,13 @@
 /*   By: apregitz <apregitz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:37:03 by apregitz          #+#    #+#             */
-/*   Updated: 2025/09/21 15:06:36 by apregitz         ###   ########.fr       */
+/*   Updated: 2025/09/21 15:25:55 by apregitz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int get_time_in_ms(void)
+int	get_time_in_ms(void)
 {
 	struct timeval	tv;
 
@@ -20,7 +20,7 @@ int get_time_in_ms(void)
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-int ft_strcmp(char *s1, char *s2)
+int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
 
@@ -43,7 +43,8 @@ void	print_status(t_philo *philo, char *status)
 	pthread_mutex_unlock(&philo->death_mutex);
 	if (death_msg != 0 && death_check)
 		return ((void)pthread_mutex_unlock(&philo->data->print_mutex));
-	printf("%ld %d %s\n", get_time_in_ms() - philo->data->start_time, philo->id, status);
+	printf("%ld %d %s\n", get_time_in_ms() - philo->data->start_time,
+		philo->id, status);
 	if (death_msg != 0)
 		pthread_mutex_unlock(&philo->data->print_mutex);
 }
