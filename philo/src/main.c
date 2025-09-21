@@ -6,7 +6,7 @@
 /*   By: apregitz <apregitz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 14:18:52 by anakin            #+#    #+#             */
-/*   Updated: 2025/09/21 13:35:56 by apregitz         ###   ########.fr       */
+/*   Updated: 2025/09/21 15:54:06 by apregitz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ int	main(int argc, char **argv)
 {
 	t_data	data;
 
-	if (!parse_args(argc, argv, &data.params))
+	if (parse_args(argc, argv, &data.params) == 1)
 		return (1);
-	if (setup(&data))
+	if (setup(&data) == 1)
 		return (printf("setup error\n"), 1);
 	monitor_philos(&data);
 	cleanup_data(&data);

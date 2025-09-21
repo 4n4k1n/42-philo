@@ -6,7 +6,7 @@
 /*   By: apregitz <apregitz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:37:03 by apregitz          #+#    #+#             */
-/*   Updated: 2025/09/21 15:25:55 by apregitz         ###   ########.fr       */
+/*   Updated: 2025/09/21 15:44:18 by apregitz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	print_status(t_philo *philo, char *status)
 	if (death_msg != 0 && death_check)
 		return ((void)pthread_mutex_unlock(&philo->data->print_mutex));
 	printf("%ld %d %s\n", get_time_in_ms() - philo->data->start_time,
-		philo->id, status);
+		philo->id + 1, status);
 	if (death_msg != 0)
 		pthread_mutex_unlock(&philo->data->print_mutex);
 }

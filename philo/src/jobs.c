@@ -6,7 +6,7 @@
 /*   By: apregitz <apregitz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 14:34:33 by apregitz          #+#    #+#             */
-/*   Updated: 2025/09/21 14:52:42 by apregitz         ###   ########.fr       */
+/*   Updated: 2025/09/21 15:41:52 by apregitz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ int	eating(t_philo *philo)
 	int		exit_code;
 	bool	death_check;
 
+	if (&philo->left_fork == philo->right_fork)
+		return (print_status(philo, "has taken a fork"), 1);
 	exit_code = 0;
 	pthread_mutex_lock(&philo->death_mutex);
 	death_check = philo->dead;
