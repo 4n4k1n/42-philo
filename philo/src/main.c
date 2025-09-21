@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: anakin <anakin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/05 10:23:40 by apregitz          #+#    #+#             */
-/*   Updated: 2025/09/20 04:26:29 by anakin           ###   ########.fr       */
+/*   Created: 2025/09/20 14:18:52 by anakin            #+#    #+#             */
+/*   Updated: 2025/09/20 17:15:27 by anakin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,15 @@ void monitor_philos(t_data *data)
 			pthread_mutex_unlock(&data->philos[i].meal_mutex);
 			if ((current_time - last_meal) > data->params.time_to_die)
 			{ 
+				pthread_mutex_lock(&data->print_mutex);
 				set_all_philos_dead(data);
 				print_status(&data->philos[i], "died");
+				pthread_mutex_unlock(&data->print_mutex);
 				return ;
 			}
 			if (check_for_enough_meals(data, i))
 				return ((void)set_all_philos_dead(data));
-			i++;
-		}
-		usleep(500);
+			i++; } usleep(500);
 	}
 }
 
@@ -99,7 +99,7 @@ void	cleanup_data(t_data *data)
 
 int	main(int argc, char **argv)
 {
-	t_data		data;
+	t_data	data;
 
 	if (!parse_args(argc, argv, &data.params))
 		return (1);
