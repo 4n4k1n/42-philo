@@ -1,10 +1,12 @@
-/* ************************************************************************** */ /*                                                                            */ /*                                                        :::      ::::::::   */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
 /*   setup.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anakin <anakin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: apregitz <apregitz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/05 10:40:49 by apregitz          #+#    #+#             */
-/*   Updated: 2025/09/19 23:42:47 by anakin           ###   ########.fr       */
+/*   Created: 2025/09/21 14:37:17 by apregitz          #+#    #+#             */
+/*   Updated: 2025/09/21 14:40:29 by apregitz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +30,13 @@ static int	create_philo_array(t_data *data)
 	data->philos = malloc(sizeof(t_philo) * data->params.num_philos);
 	if (!data->philos)
 		return (0);
-	for (i = 0; i < data->params.num_philos; i++)
+	i = 0;
+	while (i < data->params.num_philos)
 	{
 		init_philo(&data->philos[i], i + 1, data);
 		if (i > 0)
 			data->philos[i - 1].right_fork = &data->philos[i].left_fork;
+		i++;
 	}
 	data->philos[max].right_fork = &data->philos[0].left_fork;
 	return (1);
@@ -68,7 +72,8 @@ static int	create_mutexes(t_data *data)
 	
 	if (pthread_mutex_init(&data->print_mutex, NULL) != 0)
 		return (printf("Mutex init error: print_mutex"), 1);
-	for (i = 0; i < data->params.num_philos; i++)
+	i = -1;
+	while (++i < data->params.num_philos)
 	{
 		if (pthread_mutex_init(&data->philos[i].left_fork, NULL) != 0)
 		{
@@ -94,7 +99,8 @@ int create_threads(t_data *data)
 {
 	int	i;
 
-	for (i = 0; i < data->params.num_philos; i++)
+	i = 0;
+	while (i < data->params.num_philos)
 	{
 		if (pthread_create(&data->philos[i].thread, NULL, routine,  &data->philos[i]) != 0)
 		{
@@ -102,6 +108,7 @@ int create_threads(t_data *data)
 				pthread_join(data->philos[i].thread, NULL);
 			return (1);
 		}
+		i++;
 	}
 	return (0);
 }

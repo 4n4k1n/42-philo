@@ -6,7 +6,7 @@
 #    By: apregitz <apregitz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/23 21:34:42 by anakin            #+#    #+#              #
-#    Updated: 2025/09/10 14:57:18 by apregitz         ###   ########.fr        #
+#    Updated: 2025/09/21 12:11:57 by apregitz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ SRCS = $(SRCDIR)/main.c \
           $(SRCDIR)/utils.c \
           $(SRCDIR)/setup.c \
 		  $(SRCDIR)/jobs.c \
-		  $(SRCDIR)/parsing.c
+		  $(SRCDIR)/parsing.c \
+		  $(SRCDIR)/monitor.c
 
 # Object files
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)

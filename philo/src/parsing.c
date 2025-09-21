@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anakin <anakin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: apregitz <apregitz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 10:05:18 by apregitz          #+#    #+#             */
-/*   Updated: 2025/09/20 17:13:11 by anakin           ###   ########.fr       */
+/*   Updated: 2025/09/21 14:27:18 by apregitz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	parse_args(int argc, char **argv, t_params *params)
 		return (0);
 	if (!parse_int(argv[3], &params->time_to_eat) || params->time_to_eat < 0)
 		return (0);
-	if (!parse_int(argv[4], &params->time_to_sleep) || params->time_to_sleep < 0)
+	if (!parse_int(argv[4], &params->time_to_sleep)
+		|| params->time_to_sleep < 1)
 		return (0);
 	if (argc == 6)
 	{

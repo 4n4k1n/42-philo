@@ -6,7 +6,7 @@
 /*   By: apregitz <apregitz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 14:32:59 by apregitz          #+#    #+#             */
-/*   Updated: 2025/09/20 02:21:09 by apregitz         ###   ########.fr       */
+/*   Updated: 2025/09/21 12:16:17 by apregitz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include <sys/time.h>
 # include <unistd.h>
 # include <stdio.h>
-#include <limits.h>
-#include <stdbool.h>
+# include <limits.h>
+# include <stdbool.h>
 
 typedef struct s_data	t_data;
 
@@ -63,5 +63,9 @@ void	cleanup_data(t_data *data);
 void	*routine(void *arg);
 void	monitor_philos(t_data *data);
 int		setup(t_data *data);
+int		ft_usleep(long time_in_ms, t_philo *philo);
+int		eating(t_philo *philo);
+int		thinking(t_philo *philo);
+int		sleeping(t_philo *philo);
 
 #endif
